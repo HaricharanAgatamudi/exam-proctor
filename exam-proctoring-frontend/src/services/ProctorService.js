@@ -1,5 +1,9 @@
 import { io } from 'socket.io-client';
 
+// Use Vite environment variables
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+const PYTHON_PROCTOR_URL = import.meta.env.VITE_PYTHON_PROCTOR_URL || 'http://localhost:5001';
+
 class ProctorService {
   constructor() {
     this.socket = null;
@@ -13,9 +17,10 @@ class ProctorService {
 
   connect() {
     console.log('🔌 Connecting to Python Proctor Server...');
+    console.log('🌐 Using URL:', PYTHON_PROCTOR_URL);
     
-    this.socket = io('http://localhost:5001', {
-      transports: ['websocket'],
+    this.socket = io(PYTHON_PROCTOR_URL, {
+      transports: ['websocket', 'polling'],
       reconnection: true,
       reconnectionAttempts: 5,
       reconnectionDelay: 1000
@@ -77,7 +82,7 @@ class ProctorService {
 
       // Notify Node.js backend
       try {
-        const response = await fetch('http://localhost:5000/api/proctoring/start', {
+        const response = await fetch(`${BACKEND_URL}/api/proctoring/start`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
@@ -271,7 +276,7 @@ class ProctorService {
     // Save to Node.js backend if session exists
     if (this.sessionId) {
       try {
-        await fetch('http://localhost:5000/api/proctoring/violation', {
+        await fetch(`${BACKEND_URL}/api/proctoring/violation`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -319,7 +324,7 @@ class ProctorService {
         // Save final report to Node.js if session exists
         if (this.sessionId) {
           try {
-            await fetch('http://localhost:5000/api/proctoring/end', {
+            await fetch(`${BACKEND_URL}/api/proctoring/end`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -361,7 +366,5 @@ class ProctorService {
     console.log('✅ Proctor service disconnected');
   }
 }
-
-
 
 export default new ProctorService();
