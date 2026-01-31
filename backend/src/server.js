@@ -16,22 +16,11 @@ const app = express();
 
 // CORS Configuration
 const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or Postman)
-    if (!origin) return callback(null, true);
-    
-    const allowedOrigins = [
-      'https://exam-proctor.vercel.app',  // Your Vercel frontend (update after deployment)
-      'http://localhost:3000',             // Local development
-      'http://localhost:5173',             // Vite dev server (if using)
-    ];
-    
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(null, true); // For now, allow all. Change to false in strict production
-    }
-  },
+  origin: [
+    'https://exam-proctor-app.vercel.app',  // Production Vercel URL
+    'http://localhost:5173',                 // Vite dev server
+    'http://localhost:3000'                  // React dev server
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']

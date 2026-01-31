@@ -15,10 +15,18 @@ from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, origins=["*"])
+CORS(app, origins=[
+    "https://exam-proctor-app.vercel.app",  # Production Vercel URL
+    "http://localhost:5173",                 # Vite dev server
+    "http://localhost:3000"                  # React dev server
+], supports_credentials=True)
 
 # SocketIO
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins=[
+    "https://exam-proctor-app.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:3000"
+])
 
 # MongoDB Connection - SINGLE INITIALIZATION with error handling
 MONGODB_URI = os.getenv('MONGODB_URI')
