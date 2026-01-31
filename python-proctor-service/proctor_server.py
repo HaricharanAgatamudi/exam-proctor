@@ -16,16 +16,44 @@ client = MongoClient(MONGODB_URI)
 db = client['exam_proctoring']
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
-socketio = SocketIO(
-    app, 
-    cors_allowed_origins="*", 
-    async_mode='threading',
-    logger=False,
-    engineio_logger=False,
-    ping_timeout=60,
-    ping_interval=25
-)
+CORS(app, origins=["*"])
+
+# SocketIO
+socketio = SocketIO(app, cors_allowed_origins="*")
+MONGODB_URI = os.getenv('MONGODB_URI')
+if MONGODB_URI:
+    try:
+        client = MongoClient(MONGODB_URI)
+        db = client['exam_proctoring']
+        print("✅ MongoDB Connected")
+    except Exception as e:
+        print(f"❌ MongoDB Error: {e}")
+        db = None
+else:
+    print("❌ MongoDB URI not found")
+    db = None
+
+# Routes
+@app.route('/')
+def home():
+    return jsonify({
+        "status": "running",
+        "message": "Exam Proctor AI Service",
+        "version": "1.0.0",
+        "endpoints": {
+            "health": "/health",
+            "detect_face": "/detect-face",
+            "analyze_typing": "/analyze-typing"
+        }
+    })
+
+@app.route('/health')
+def health():
+    return jsonify({
+        "status": "OK",
+        "message": "AI Service is running",
+        "mongodb": "connected" if db is not None else "disconnected"
+    })
 
 active_sessions = {}
 
@@ -447,19 +475,12 @@ def end_proctoring(data):
         emit('error', {'message': str(e)})
 
 if __name__ == '__main__':
-    print("=" * 60)
-    print("🚀 BALANCED GHOST TYPING DETECTION v4.0")
-    print("=" * 60)
-    print("✅ Features:")
-    print("   - Balanced detection thresholds")
-    print("   - Multi-level confirmation")
-    print("   - 8-second cooldown")
-    print("   - Pattern analysis over 2-3 seconds")
-    print("=" * 60)
+
     
     try:
-            port = int(os.getenv('PORT', 5000))
-            app.run(host='0.0.0.0', port=port)
+        port = int(os.getenv('PORT', 5001))
+        print(f"🚀 Starting AI Service on port {port}")
+        socketio.run(app, host='0.0.0.0', port=port, debug=False)
        
     except Exception as e:
         print(f"❌ Server error: {e}")
