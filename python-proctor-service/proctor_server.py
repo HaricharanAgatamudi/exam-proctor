@@ -10,28 +10,52 @@ import time
 import os
 from dotenv import load_dotenv
 from pymongo import MongoClient
+from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
+
 load_dotenv()
-MONGODB_URI = os.getenv('MONGODB_URI')
-client = MongoClient(MONGODB_URI)
-db = client['exam_proctoring']
 
 app = Flask(__name__)
 CORS(app, origins=["*"])
 
 # SocketIO
 socketio = SocketIO(app, cors_allowed_origins="*")
+
+# MongoDB Connection - SINGLE INITIALIZATION with error handling
 MONGODB_URI = os.getenv('MONGODB_URI')
+db = None
+
 if MONGODB_URI:
     try:
-        client = MongoClient(MONGODB_URI)
+        print("🔗 Connecting to MongoDB...")
+        print(f"🔗 URI: mongodb+srv://...{MONGODB_URI[-30:]}")  # Print last 30 chars only
+        
+        client = MongoClient(
+            MONGODB_URI,
+            serverSelectionTimeoutMS=30000,  # 30 seconds
+            connectTimeoutMS=30000,
+            socketTimeoutMS=30000,
+            retryWrites=True,
+            w='majority'
+        )
+        
+        # Test connection
+        client.admin.command('ping')
         db = client['exam_proctoring']
-        print("✅ MongoDB Connected")
+        print("✅ MongoDB Connected Successfully!")
+        
+    except (ConnectionFailure, ServerSelectionTimeoutError) as e:
+        print(f"❌ MongoDB Connection Failed: {e}")
+        print("⚠️  Service will start but database features disabled")
+        db = None
     except Exception as e:
-        print(f"❌ MongoDB Error: {e}")
+        print(f"❌ Unexpected MongoDB Error: {e}")
+        traceback.print_exc()
         db = None
 else:
-    print("❌ MongoDB URI not found")
-    db = None
+    print("❌ MONGODB_URI environment variable not found!")
+    print("⚠️  Set MONGODB_URI in Render environment variables")
+
+
 
 # Routes
 @app.route('/')
