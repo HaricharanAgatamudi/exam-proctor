@@ -1,0 +1,820 @@
+{
+  "evaluation_date": "2026-01-30T12:31:12.225895",
+  "metrics": {
+    "total_sessions": 50,
+    "confusion_matrix": {
+      "TP": 16,
+      "TN": 29,
+      "FP": 1,
+      "FN": 4
+    },
+    "metrics": {
+      "accuracy": 90.01,
+      "precision": 94.12,
+      "recall": 80.0,
+      "specificity": 96.67,
+      "f1_score": 86.49,
+      "false_positive_rate": 3.33,
+      "false_negative_rate": 20.0,
+      "mcc": 0.7929
+    },
+    "breakdown": {
+      "genuine_sessions": 30,
+      "cheating_sessions": 20,
+      "correctly_classified": 45,
+      "incorrectly_classified": 5
+    }
+  },
+  "sessions": [
+    {
+      "session_id": "696ef3ec2166d9aafdd993c3",
+      "student_id": "user_050",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 76,
+      "labeled_at": "2026-01-20T03:18:59.197Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993c2",
+      "student_id": "user_049",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 72,
+      "labeled_at": "2026-01-20T03:18:59.195Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993c1",
+      "student_id": "user_048",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 93,
+      "labeled_at": "2026-01-20T03:18:59.193Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993c0",
+      "student_id": "user_047",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 74,
+      "labeled_at": "2026-01-20T03:18:59.190Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993bf",
+      "student_id": "user_046",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 80,
+      "labeled_at": "2026-01-20T03:18:59.186Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993be",
+      "student_id": "user_045",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 79,
+      "labeled_at": "2026-01-20T03:18:59.185Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993bd",
+      "student_id": "user_044",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 82,
+      "labeled_at": "2026-01-20T03:18:59.183Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993bc",
+      "student_id": "user_043",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 86,
+      "labeled_at": "2026-01-20T03:18:59.181Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993bb",
+      "student_id": "user_042",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 79,
+      "labeled_at": "2026-01-20T03:18:59.179Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993ba",
+      "student_id": "user_041",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 85,
+      "labeled_at": "2026-01-20T03:18:59.178Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993b9",
+      "student_id": "user_040",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 83,
+      "labeled_at": "2026-01-20T03:18:59.176Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993b8",
+      "student_id": "user_039",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 77,
+      "labeled_at": "2026-01-20T03:18:59.170Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993b7",
+      "student_id": "user_038",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 74,
+      "labeled_at": "2026-01-20T03:18:59.169Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993b6",
+      "student_id": "user_037",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 71,
+      "labeled_at": "2026-01-20T03:18:59.167Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993b5",
+      "student_id": "user_036",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 72,
+      "labeled_at": "2026-01-20T03:18:59.165Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993b4",
+      "student_id": "user_035",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 72,
+      "labeled_at": "2026-01-20T03:18:59.163Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993b3",
+      "student_id": "user_034",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 79,
+      "labeled_at": "2026-01-20T03:18:59.158Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993b2",
+      "student_id": "user_033",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 87,
+      "labeled_at": "2026-01-20T03:18:59.153Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993b1",
+      "student_id": "user_032",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 83,
+      "labeled_at": "2026-01-20T03:18:59.151Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993b0",
+      "student_id": "user_031",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 88,
+      "labeled_at": "2026-01-20T03:18:59.150Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993af",
+      "student_id": "user_030",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 94,
+      "labeled_at": "2026-01-20T03:18:59.148Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993ae",
+      "student_id": "user_029",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 85,
+      "labeled_at": "2026-01-20T03:18:59.146Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993ad",
+      "student_id": "user_028",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 90,
+      "labeled_at": "2026-01-20T03:18:59.145Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993ac",
+      "student_id": "user_027",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 80,
+      "labeled_at": "2026-01-20T03:18:59.138Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993ab",
+      "student_id": "user_026",
+      "violations_detected": [],
+      "has_ghost_typing": false,
+      "violation_count": 0,
+      "manual_label": "CHEATING",
+      "system_prediction": "GENUINE",
+      "classification": "FN",
+      "score": 70,
+      "labeled_at": "2026-01-20T03:18:59.135Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "other"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993a4",
+      "student_id": "user_019",
+      "violations_detected": [
+        "LOOKING_AWAY",
+        "LOOKING_AWAY"
+      ],
+      "has_ghost_typing": false,
+      "violation_count": 2,
+      "manual_label": "CHEATING",
+      "system_prediction": "GENUINE",
+      "classification": "FN",
+      "score": 73,
+      "labeled_at": "2026-01-20T03:18:59.124Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "other"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993a8",
+      "student_id": "user_023",
+      "violations_detected": [
+        "LOOKING_AWAY"
+      ],
+      "has_ghost_typing": false,
+      "violation_count": 1,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 76,
+      "labeled_at": "2026-01-20T03:18:59.107Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993a7",
+      "student_id": "user_022",
+      "violations_detected": [
+        "LOOKING_AWAY"
+      ],
+      "has_ghost_typing": false,
+      "violation_count": 1,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 83,
+      "labeled_at": "2026-01-20T03:18:59.102Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993a6",
+      "student_id": "user_021",
+      "violations_detected": [
+        "LOOKING_AWAY"
+      ],
+      "has_ghost_typing": false,
+      "violation_count": 1,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 85,
+      "labeled_at": "2026-01-20T03:18:59.091Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993aa",
+      "student_id": "user_025",
+      "violations_detected": [
+        "NO_FACE_DETECTED"
+      ],
+      "has_ghost_typing": false,
+      "violation_count": 1,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 87,
+      "labeled_at": "2026-01-20T03:18:59.062Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993a9",
+      "student_id": "user_024",
+      "violations_detected": [
+        "NO_FACE_DETECTED"
+      ],
+      "has_ghost_typing": false,
+      "violation_count": 1,
+      "manual_label": "GENUINE",
+      "system_prediction": "GENUINE",
+      "classification": "TN",
+      "score": 93,
+      "labeled_at": "2026-01-20T03:18:59.058Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993a5",
+      "student_id": "user_020",
+      "violations_detected": [
+        "PHONE_DETECTED",
+        "LOOKING_AWAY"
+      ],
+      "has_ghost_typing": false,
+      "violation_count": 2,
+      "manual_label": "CHEATING",
+      "system_prediction": "GENUINE",
+      "classification": "FN",
+      "score": 55,
+      "labeled_at": "2026-01-20T03:18:59.053Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "other"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993a3",
+      "student_id": "user_018",
+      "violations_detected": [
+        "NO_FACE_DETECTED",
+        "LOOKING_AWAY"
+      ],
+      "has_ghost_typing": false,
+      "violation_count": 2,
+      "manual_label": "CHEATING",
+      "system_prediction": "GENUINE",
+      "classification": "FN",
+      "score": 72,
+      "labeled_at": "2026-01-20T03:18:59.043Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "other"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993a2",
+      "student_id": "user_017",
+      "violations_detected": [
+        "MULTIPLE_PERSONS"
+      ],
+      "has_ghost_typing": false,
+      "violation_count": 1,
+      "manual_label": "CHEATING",
+      "system_prediction": "CHEATING",
+      "classification": "TP",
+      "score": 71,
+      "labeled_at": "2026-01-20T03:18:59.030Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "multiple_persons"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993a1",
+      "student_id": "user_016",
+      "violations_detected": [
+        "MULTIPLE_PERSONS"
+      ],
+      "has_ghost_typing": false,
+      "violation_count": 1,
+      "manual_label": "CHEATING",
+      "system_prediction": "CHEATING",
+      "classification": "TP",
+      "score": 72,
+      "labeled_at": "2026-01-20T03:18:59.027Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "multiple_persons"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd993a0",
+      "student_id": "user_015",
+      "violations_detected": [
+        "MULTIPLE_PERSONS"
+      ],
+      "has_ghost_typing": false,
+      "violation_count": 1,
+      "manual_label": "CHEATING",
+      "system_prediction": "CHEATING",
+      "classification": "TP",
+      "score": 55,
+      "labeled_at": "2026-01-20T03:18:59.020Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "multiple_persons"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd9939f",
+      "student_id": "user_014",
+      "violations_detected": [
+        "MULTIPLE_PERSONS"
+      ],
+      "has_ghost_typing": false,
+      "violation_count": 1,
+      "manual_label": "CHEATING",
+      "system_prediction": "CHEATING",
+      "classification": "TP",
+      "score": 52,
+      "labeled_at": "2026-01-20T03:18:59.018Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "multiple_persons"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd9939e",
+      "student_id": "user_013",
+      "violations_detected": [
+        "MULTIPLE_PERSONS"
+      ],
+      "has_ghost_typing": false,
+      "violation_count": 1,
+      "manual_label": "CHEATING",
+      "system_prediction": "CHEATING",
+      "classification": "TP",
+      "score": 69,
+      "labeled_at": "2026-01-20T03:18:59.007Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "multiple_persons"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd9939d",
+      "student_id": "user_012",
+      "violations_detected": [
+        "GHOST_TYPING_DETECTED",
+        "LOOKING_AWAY"
+      ],
+      "has_ghost_typing": true,
+      "violation_count": 2,
+      "manual_label": "GENUINE",
+      "system_prediction": "CHEATING",
+      "classification": "FP",
+      "score": 50,
+      "labeled_at": "2026-01-20T03:18:58.977Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": null
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd9939c",
+      "student_id": "user_011",
+      "violations_detected": [
+        "GHOST_TYPING_DETECTED"
+      ],
+      "has_ghost_typing": true,
+      "violation_count": 1,
+      "manual_label": "CHEATING",
+      "system_prediction": "CHEATING",
+      "classification": "TP",
+      "score": 74,
+      "labeled_at": "2026-01-20T03:18:58.974Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "ghost_typing"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd9939b",
+      "student_id": "user_010",
+      "violations_detected": [
+        "GHOST_TYPING_DETECTED",
+        "LOOKING_AWAY"
+      ],
+      "has_ghost_typing": true,
+      "violation_count": 2,
+      "manual_label": "CHEATING",
+      "system_prediction": "CHEATING",
+      "classification": "TP",
+      "score": 54,
+      "labeled_at": "2026-01-20T03:18:58.970Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "ghost_typing"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd9939a",
+      "student_id": "user_009",
+      "violations_detected": [
+        "GHOST_TYPING_DETECTED",
+        "LOOKING_AWAY"
+      ],
+      "has_ghost_typing": true,
+      "violation_count": 2,
+      "manual_label": "CHEATING",
+      "system_prediction": "CHEATING",
+      "classification": "TP",
+      "score": 62,
+      "labeled_at": "2026-01-20T03:18:58.967Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "ghost_typing"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd99399",
+      "student_id": "user_008",
+      "violations_detected": [
+        "GHOST_TYPING_DETECTED",
+        "LOOKING_AWAY"
+      ],
+      "has_ghost_typing": true,
+      "violation_count": 2,
+      "manual_label": "CHEATING",
+      "system_prediction": "CHEATING",
+      "classification": "TP",
+      "score": 69,
+      "labeled_at": "2026-01-20T03:18:58.966Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "ghost_typing"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd99398",
+      "student_id": "user_007",
+      "violations_detected": [
+        "GHOST_TYPING_DETECTED",
+        "LOOKING_AWAY"
+      ],
+      "has_ghost_typing": true,
+      "violation_count": 2,
+      "manual_label": "CHEATING",
+      "system_prediction": "CHEATING",
+      "classification": "TP",
+      "score": 66,
+      "labeled_at": "2026-01-20T03:18:58.964Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "ghost_typing"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd99397",
+      "student_id": "user_006",
+      "violations_detected": [
+        "GHOST_TYPING_DETECTED",
+        "LOOKING_AWAY"
+      ],
+      "has_ghost_typing": true,
+      "violation_count": 2,
+      "manual_label": "CHEATING",
+      "system_prediction": "CHEATING",
+      "classification": "TP",
+      "score": 65,
+      "labeled_at": "2026-01-20T03:18:58.962Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "ghost_typing"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd99396",
+      "student_id": "user_005",
+      "violations_detected": [
+        "GHOST_TYPING_DETECTED",
+        "LOOKING_AWAY"
+      ],
+      "has_ghost_typing": true,
+      "violation_count": 2,
+      "manual_label": "CHEATING",
+      "system_prediction": "CHEATING",
+      "classification": "TP",
+      "score": 68,
+      "labeled_at": "2026-01-20T03:18:58.960Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "ghost_typing"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd99395",
+      "student_id": "user_004",
+      "violations_detected": [
+        "GHOST_TYPING_DETECTED",
+        "LOOKING_AWAY"
+      ],
+      "has_ghost_typing": true,
+      "violation_count": 2,
+      "manual_label": "CHEATING",
+      "system_prediction": "CHEATING",
+      "classification": "TP",
+      "score": 55,
+      "labeled_at": "2026-01-20T03:18:58.958Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "ghost_typing"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd99394",
+      "student_id": "user_003",
+      "violations_detected": [
+        "GHOST_TYPING_DETECTED",
+        "LOOKING_AWAY"
+      ],
+      "has_ghost_typing": true,
+      "violation_count": 2,
+      "manual_label": "CHEATING",
+      "system_prediction": "CHEATING",
+      "classification": "TP",
+      "score": 51,
+      "labeled_at": "2026-01-20T03:18:58.953Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "ghost_typing"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd99393",
+      "student_id": "user_002",
+      "violations_detected": [
+        "GHOST_TYPING_DETECTED",
+        "LOOKING_AWAY"
+      ],
+      "has_ghost_typing": true,
+      "violation_count": 2,
+      "manual_label": "CHEATING",
+      "system_prediction": "CHEATING",
+      "classification": "TP",
+      "score": 63,
+      "labeled_at": "2026-01-20T03:18:58.948Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "ghost_typing"
+    },
+    {
+      "session_id": "696ef3ec2166d9aafdd99392",
+      "student_id": "user_001",
+      "violations_detected": [
+        "GHOST_TYPING_DETECTED"
+      ],
+      "has_ghost_typing": true,
+      "violation_count": 1,
+      "manual_label": "CHEATING",
+      "system_prediction": "CHEATING",
+      "classification": "TP",
+      "score": 48,
+      "labeled_at": "2026-01-20T03:18:58.934Z",
+      "labeled_by": "Expert Reviewer",
+      "cheating_type": "ghost_typing"
+    }
+  ],
+  "sklearn_report": {
+    "GENUINE": {
+      "precision": 0.8787878787878788,
+      "recall": 0.9666666666666667,
+      "f1-score": 0.9206349206349206,
+      "support": 30.0
+    },
+    "CHEATING": {
+      "precision": 0.9411764705882353,
+      "recall": 0.8,
+      "f1-score": 0.8648648648648649,
+      "support": 20.0
+    },
+    "accuracy": 0.9,
+    "macro avg": {
+      "precision": 0.909982174688057,
+      "recall": 0.8833333333333333,
+      "f1-score": 0.8927498927498927,
+      "support": 50.0
+    },
+    "weighted avg": {
+      "precision": 0.9037433155080214,
+      "recall": 0.9,
+      "f1-score": 0.8983268983268983,
+      "support": 50.0
+    }
+  }
+}

@@ -1,0 +1,11 @@
+[
+  {
+    "_id": { "$oid": "67890abc123def4567890123" },
+    "name": "Test Student",
+    "email": "student@example.com",
+    "password": "$2a$10$xuVd9zWQHq7wT9X2sWZrMOsJZ1z7l6i1lYxsa1eXXyYQKwh8q0LaO", 
+    "role": "student",
+    "createdAt": { "$date": "2025-01-01T00:00:00.000Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00.000Z" }
+  }
+]

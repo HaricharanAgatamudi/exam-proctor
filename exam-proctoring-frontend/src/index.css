@@ -1,0 +1,273 @@
+@import "tailwindcss";
+
+/* Custom enhancements for a more polished look */
+@layer base {
+  * {
+    @apply antialiased;
+  }
+  
+  body {
+    @apply bg-gradient-to-br from-purple-100 via-blue-50 to-pink-100;
+    @apply min-h-screen;
+    @apply font-sans;
+  }
+}
+
+@layer components {
+  /* Enhanced Input Styles */
+  input[type="email"],
+  input[type="password"],
+  input[type="text"],
+  textarea {
+    @apply transition-all duration-300;
+    @apply focus:ring-2 focus:ring-purple-500 focus:ring-offset-2;
+  }
+
+  /* Enhanced Button Styles */
+  button {
+    @apply transition-all duration-300;
+    @apply active:scale-95;
+  }
+
+  button:disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
+
+  /* Card hover effects */
+  .hover-lift {
+    @apply transition-all duration-300;
+    @apply hover:-translate-y-1 hover:shadow-2xl;
+  }
+
+  /* Smooth animations */
+  .fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Enhanced gradient backgrounds */
+  .gradient-purple {
+    @apply bg-gradient-to-r from-purple-600 to-blue-600;
+  }
+
+  .gradient-green {
+    @apply bg-gradient-to-r from-green-600 to-blue-600;
+  }
+
+  /* Enhanced shadows */
+  .shadow-glow {
+    box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.4);
+  }
+
+  .shadow-glow-green {
+    box-shadow: 0 10px 40px -10px rgba(16, 185, 129, 0.4);
+  }
+
+  /* Video element styling */
+  video {
+    @apply rounded-lg shadow-inner;
+    object-fit: cover;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-purple-400 rounded-full;
+    @apply hover:bg-purple-500;
+  }
+
+  /* Enhanced text selection */
+  ::selection {
+    @apply bg-purple-200 text-purple-900;
+  }
+
+  /* Loading spinner */
+  .spinner {
+    border: 3px solid rgba(99, 102, 241, 0.1);
+    border-top-color: #6366f1;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Badge pulse animation */
+  .pulse-badge {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  /* Enhanced focus states */
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    @apply outline-none ring-2 ring-purple-500 ring-offset-2;
+  }
+
+  /* Smooth page transitions */
+  .page-transition {
+    animation: slideIn 0.3s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Enhanced card styles */
+  .card-elevated {
+    @apply bg-white rounded-2xl shadow-xl;
+    @apply border border-purple-100;
+    @apply backdrop-blur-sm;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-purple-600 to-blue-600;
+    @apply bg-clip-text text-transparent;
+  }
+
+  /* Enhanced violations display */
+  .violation-item {
+    @apply transform transition-all duration-300;
+    @apply hover:scale-102 hover:shadow-md;
+  }
+
+  /* Responsive video sizing */
+  video {
+    @apply w-full h-auto;
+    min-height: 180px;
+  }
+
+  /* Enhanced timer display */
+  .timer-critical {
+    animation: timerPulse 1s ease-in-out infinite;
+  }
+
+  @keyframes timerPulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  /* Exam question card enhancements */
+  .question-option {
+    @apply transition-all duration-200;
+    @apply hover:bg-purple-50 hover:border-purple-300;
+  }
+
+  .question-option.selected {
+    @apply bg-purple-50 border-purple-600 shadow-md;
+    @apply transform scale-[1.02];
+  }
+
+  /* Status indicators */
+  .status-recording {
+    @apply relative;
+  }
+
+  .status-recording::before {
+    content: '';
+    @apply absolute left-0 w-2 h-2 bg-red-500 rounded-full;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  /* Enhanced navbar */
+  .navbar-sticky {
+    @apply backdrop-blur-md bg-white/90;
+    @apply border-b border-purple-100;
+  }
+
+  /* Progress bar animation */
+  .progress-bar {
+    @apply transition-all duration-500 ease-out;
+  }
+
+  /* Floating action effects */
+  .float-on-hover {
+    @apply transition-transform duration-300;
+    @apply hover:-translate-y-2;
+  }
+}
+
+/* Utility classes */
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .backdrop-blur-safari {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    @apply bg-white;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+  /* Add dark mode styles here if needed */
+}
