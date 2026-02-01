@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/Login.css';
 
 // ✅ CORRECT: Use Vite environment variables instead of hardcoded localhost
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://exam-proctor-backend-jxrb.onrender.com';
 
 const Login = ({ onLogin, onSwitchToRegister }) => {
   const [identifier, setIdentifier] = useState('');
