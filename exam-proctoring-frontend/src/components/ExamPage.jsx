@@ -1,7 +1,11 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import recordingManager from '../utils/recordingManager';
 import ProctorService from '../services/ProctorService';
 import '../styles/Exam.css';
+
+// ✅ ADD THIS LINE AT THE TOP
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
 const ExamPage = ({ user, token, streams, onExamComplete }) => {
   const [exam, setExam] = useState(null);
@@ -91,7 +95,8 @@ const ExamPage = ({ user, token, streams, onExamComplete }) => {
   const fetchExam = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/exams/active', {
+      // ✅ FIXED: Use environment variable
+      const response = await fetch(`${BACKEND_URL}/api/exams/active`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 
@@ -106,8 +111,8 @@ const ExamPage = ({ user, token, streams, onExamComplete }) => {
       setExam(examData);
       setTimeRemaining(examData.duration * 60);
       
-      // Create submission
-      const subResponse = await fetch('http://localhost:5000/api/exams/start', {
+      // ✅ FIXED: Use environment variable
+      const subResponse = await fetch(`${BACKEND_URL}/api/exams/start`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -320,7 +325,8 @@ const ExamPage = ({ user, token, streams, onExamComplete }) => {
     setOutput('⏳ Compiling and running...\n');
 
     try {
-      const response = await fetch('http://localhost:5000/api/exams/execute', {
+      // ✅ FIXED: Use environment variable
+      const response = await fetch(`${BACKEND_URL}/api/exams/execute`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -442,7 +448,9 @@ const ExamPage = ({ user, token, streams, onExamComplete }) => {
       ];
 
       console.log('📤 Submitting exam with proctor data...');
-      const response = await fetch('http://localhost:5000/api/exams/submit', {
+      
+      // ✅ FIXED: Use environment variable
+      const response = await fetch(`${BACKEND_URL}/api/exams/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -498,6 +506,9 @@ const ExamPage = ({ user, token, streams, onExamComplete }) => {
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
+
+  // ... rest of your component (the return JSX) stays exactly the same ...
+  // I'm not including it here to save space, but NO changes needed to the JSX return section
 
   if (loading) {
     return (

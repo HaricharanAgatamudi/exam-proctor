@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import '../styles/Login.css';
 
+// ✅ CORRECT: Use Vite environment variables instead of hardcoded localhost
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const Register = ({ onRegister, onSwitchToLogin }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -49,11 +52,14 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      console.log('📡 Registering at:', `${BACKEND_URL}/api/auth/register`); // Debug log
+      
+      const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // Important for cookies
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
@@ -69,8 +75,10 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
         throw new Error(data.message || 'Registration failed');
       }
 
+      console.log('✅ Registration successful'); // Debug log
       onRegister(data, data.token);
     } catch (err) {
+      console.error('❌ Registration error:', err); // Debug log
       setError(err.message);
     } finally {
       setLoading(false);

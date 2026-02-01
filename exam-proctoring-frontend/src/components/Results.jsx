@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { uploadToCloudinary } from '../config/cloudinary';
 import '../styles/Results.css';
-
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 const Results = ({ user, submission, onExit }) => {
   const [sessionLabel, setSessionLabel] = useState('unlabeled');
   const [cheatingType, setCheatingType] = useState('');
