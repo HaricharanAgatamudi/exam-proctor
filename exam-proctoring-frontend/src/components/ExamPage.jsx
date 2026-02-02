@@ -5,7 +5,7 @@ import ProctorService from '../services/ProctorService';
 import '../styles/Exam.css';
 
 // ✅ ADD THIS LINE AT THE TOP
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://exam-proctor-backend-jxrb.onrender.com';
 
 const ExamPage = ({ user, token, streams, onExamComplete }) => {
   const [exam, setExam] = useState(null);

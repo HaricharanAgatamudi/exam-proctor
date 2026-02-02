@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import '../styles/Login.css';
 
-// ✅ CORRECT: Use Vite environment variables instead of hardcoded localhost
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://exam-proctor-backend-jxrb.onrender.com';
+// ✅ HARDCODED URL (since env vars not working for you)
+const BACKEND_URL = 'https://exam-proctor-backend-jxrb.onrender.com';
 
 const Login = ({ onLogin, onSwitchToRegister }) => {
   const [identifier, setIdentifier] = useState('');
@@ -28,27 +28,32 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
     setLoading(true);
 
     try {
-      console.log('📡 Logging in at:', `${BACKEND_URL}/api/auth/login`); // Debug log
+      console.log('📡 Logging in at:', `${BACKEND_URL}/api/auth/login`);
       
       const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include', // Important for cookies
-        body: JSON.stringify({ identifier, password }),
+        body: JSON.stringify({ 
+          identifier: identifier.trim(), 
+          password: password 
+        }),
       });
 
       const data = await response.json();
+      console.log('📥 Login response:', data);
 
       if (!response.ok) {
         throw new Error(data.message || 'Login failed');
       }
 
-      console.log('✅ Login successful'); // Debug log
-      onLogin(data, data.token);
+      console.log('✅ Login successful');
+      
+      // Store user data properly
+      onLogin(data.user || data, data.token);
     } catch (err) {
-      console.error('❌ Login error:', err); // Debug log
+      console.error('❌ Login error:', err);
       setError(err.message);
     } finally {
       setLoading(false);

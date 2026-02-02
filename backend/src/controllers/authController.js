@@ -67,45 +67,64 @@ exports.register = async (req, res) => {
 // @desc    Login user
 // @route   POST /api/auth/login
 // @access  Public
+// Login
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { identifier, password } = req.body;
 
-    // Validation
-    if (!email || !password) {
-      return res.status(400).json({ message: 'Please provide email and password' });
+    console.log('📥 Login attempt:', { identifier });
+
+    // ✅ FIX: Validate inputs
+    if (!identifier || !password) {
+      return res.status(400).json({ 
+        message: 'Please provide email and password' 
+      });
     }
 
-    // Find user
-    const user = await User.findOne({ email });
+    // Find user by email OR rollNo
+    const user = await User.findOne({
+      $or: [
+        { email: identifier.toLowerCase() },
+        { rollNo: identifier.toUpperCase() }
+      ]
+    }).select('+password');
+
     if (!user) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ 
+        message: 'Invalid credentials' 
+      });
     }
 
-    // Check password using model's comparePassword method
-    const isValidPassword = await user.comparePassword(password);
-    if (!isValidPassword) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+    // Check password
+    const isMatch = await user.comparePassword(password);
+    
+    if (!isMatch) {
+      return res.status(401).json({ 
+        message: 'Invalid credentials' 
+      });
     }
 
     // Generate token
-    const token = generateToken(user._id);
+    const token = user.generateAuthToken();
 
-    console.log('✅ User logged in:', user.email);
+    console.log('✅ Login successful:', user.email);
 
     res.json({
-      message: 'Login successful',
       token,
       user: {
         _id: user._id,
         name: user.name,
         email: user.email,
-        rollNo: user.rollNo
+        rollNo: user.rollNo,
+        department: user.department
       }
     });
   } catch (error) {
     console.error('❌ Login error:', error);
-    res.status(500).json({ message: 'Login failed', error: error.message });
+    res.status(500).json({ 
+      message: 'Server error', 
+      error: error.message 
+    });
   }
 };
 

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { uploadToCloudinary } from '../config/cloudinary';
 import '../styles/Results.css';
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
+// ✅ HARDCODED URL
+const BACKEND_URL = 'https://exam-proctor-backend-jxrb.onrender.com';
+
 const Results = ({ user, submission, onExit }) => {
   const [sessionLabel, setSessionLabel] = useState('unlabeled');
   const [cheatingType, setCheatingType] = useState('');
@@ -96,7 +99,7 @@ const Results = ({ user, submission, onExit }) => {
         'raw'
       );
 
-      await fetch('http://localhost:5000/api/exams/label', {
+      await fetch(`${BACKEND_URL}/api/exams/label`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

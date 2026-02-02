@@ -1,8 +1,8 @@
 import { io } from 'socket.io-client';
 
-// Use Vite environment variables
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
-const PYTHON_PROCTOR_URL = import.meta.env.VITE_PYTHON_PROCTOR_URL || 'http://localhost:5001';
+// ✅ HARDCODED URLs
+const BACKEND_URL = 'https://exam-proctor-backend-jxrb.onrender.com';
+const PYTHON_PROCTOR_URL = 'https://exam-proctor-ai.onrender.com';
 
 class ProctorService {
   constructor() {

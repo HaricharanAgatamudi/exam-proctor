@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import '../styles/Login.css';
 
-// ✅ CORRECT: Use Vite environment variables instead of hardcoded localhost
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://exam-proctor-backend-jxrb.onrender.com';
+// ✅ HARDCODED URL (since env vars not working for you)
+const BACKEND_URL = 'https://exam-proctor-backend-jxrb.onrender.com';
 
 const Register = ({ onRegister, onSwitchToLogin }) => {
   const [formData, setFormData] = useState({
@@ -52,33 +52,35 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
     setLoading(true);
 
     try {
-      console.log('📡 Registering at:', `${BACKEND_URL}/api/auth/register`); // Debug log
+      console.log('📡 Registering at:', `${BACKEND_URL}/api/auth/register`);
       
       const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include', // Important for cookies
         body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          rollNo: formData.rollNo,
+          name: formData.name.trim(),
+          email: formData.email.trim().toLowerCase(),
+          rollNo: formData.rollNo.trim().toUpperCase(),
           password: formData.password,
           department: formData.department
         }),
       });
 
       const data = await response.json();
+      console.log('📥 Registration response:', data);
 
       if (!response.ok) {
         throw new Error(data.message || 'Registration failed');
       }
 
-      console.log('✅ Registration successful'); // Debug log
-      onRegister(data, data.token);
+      console.log('✅ Registration successful');
+      
+      // Store user data properly
+      onRegister(data.user || data, data.token);
     } catch (err) {
-      console.error('❌ Registration error:', err); // Debug log
+      console.error('❌ Registration error:', err);
       setError(err.message);
     } finally {
       setLoading(false);
