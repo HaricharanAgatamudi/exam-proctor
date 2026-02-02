@@ -15,16 +15,20 @@ const generateToken = (userId) => {
 // @access  Public
 exports.register = async (req, res) => {
   try {
-    const { name, email, rollNo, password } = req.body;
+    const { name, email, rollNo, password, department } = req.body;
 
-    // Validation
+    console.log('📝 Registration attempt:', { email, rollNo });
+
+    // Validate
     if (!name || !email || !rollNo || !password) {
-      return res.status(400).json({ message: 'Please provide all fields' });
+      return res.status(400).json({ 
+        message: 'All fields are required' 
+      });
     }
 
     // Check if user exists
-    const existingUser = await User.findOne({ 
-      $or: [{ email }, { rollNo }] 
+    const existingUser = await User.findOne({
+      $or: [{ email }, { rollNo }]
     });
 
     if (existingUser) {
@@ -33,34 +37,40 @@ exports.register = async (req, res) => {
       });
     }
 
-    // Create user (password will be hashed by the model's pre-save middleware)
+    // Create user
     const user = new User({
       name,
-      email,
-      rollNo,
-      password  // Don't hash here - let the model do it
+      email: email.toLowerCase(),
+      rollNo: rollNo.toUpperCase(),
+      password,
+      department: department || 'Computer Science'
     });
 
     await user.save();
 
     // Generate token
-    const token = generateToken(user._id);
+    const token = user.generateAuthToken();
 
-    console.log('✅ User registered:', user.email);
+    console.log('✅ User registered:', user._id);
 
+    // ✅ CRITICAL: Return user object with ALL fields
     res.status(201).json({
-      message: 'User registered successfully',
       token,
       user: {
         _id: user._id,
+        id: user._id,  // Some code might use 'id'
         name: user.name,
         email: user.email,
-        rollNo: user.rollNo
+        rollNo: user.rollNo,
+        department: user.department
       }
     });
   } catch (error) {
-    console.error('❌ Register error:', error);
-    res.status(500).json({ message: 'Registration failed', error: error.message });
+    console.error('❌ Registration error:', error);
+    res.status(500).json({ 
+      message: 'Registration failed', 
+      error: error.message 
+    });
   }
 };
 
@@ -72,16 +82,15 @@ exports.login = async (req, res) => {
   try {
     const { identifier, password } = req.body;
 
-    console.log('📥 Login attempt:', { identifier });
+    console.log('🔐 Login attempt:', identifier);
 
-    // ✅ FIX: Validate inputs
     if (!identifier || !password) {
       return res.status(400).json({ 
-        message: 'Please provide email and password' 
+        message: 'Please provide email/roll number and password' 
       });
     }
 
-    // Find user by email OR rollNo
+    // Find user
     const user = await User.findOne({
       $or: [
         { email: identifier.toLowerCase() },
@@ -107,12 +116,14 @@ exports.login = async (req, res) => {
     // Generate token
     const token = user.generateAuthToken();
 
-    console.log('✅ Login successful:', user.email);
+    console.log('✅ Login successful:', user._id);
 
+    // ✅ CRITICAL: Return user object with ALL fields
     res.json({
       token,
       user: {
         _id: user._id,
+        id: user._id,
         name: user.name,
         email: user.email,
         rollNo: user.rollNo,
@@ -122,7 +133,7 @@ exports.login = async (req, res) => {
   } catch (error) {
     console.error('❌ Login error:', error);
     res.status(500).json({ 
-      message: 'Server error', 
+      message: 'Login failed', 
       error: error.message 
     });
   }
