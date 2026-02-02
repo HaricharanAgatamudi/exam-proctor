@@ -54,25 +54,46 @@ const Results = ({ user, submission, onExit }) => {
   };
 
   // Save label to Cloudinary
-  const handleSaveLabel = async () => {
-    if (sessionLabel === 'unlabeled') {
-      alert('Please select a label (Genuine or Cheating)');
-      return;
+const handleSaveLabel = async () => {
+  if (sessionLabel === 'unlabeled') {
+    alert('Please select a label (Genuine or Cheating)');
+    return;
+  }
+
+  if (sessionLabel === 'cheating' && !cheatingType) {
+    alert('Please specify the type of cheating');
+    return;
+  }
+
+  setIsLabeling(true);
+
+  try {
+    // ✅ SAVE TO BACKEND FIRST
+    const response = await fetch(`${BACKEND_URL}/api/exams/label`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        submissionId: submission._id,
+        label: sessionLabel,
+        cheatingType: sessionLabel === 'cheating' ? cheatingType : null,
+        notes,
+        labeledBy: user.name
+      })
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to save label to backend');
     }
 
-    if (sessionLabel === 'cheating' && !cheatingType) {
-      alert('Please specify the type of cheating');
-      return;
-    }
+    const result = await response.json();
+    console.log('✅ Label saved to backend:', result);
 
-    setIsLabeling(true);
-
-    try {
-      const sessionId = submission.recordings?.sessionId;
-      if (!sessionId) {
-        throw new Error('No session ID found in recordings');
-      }
-
+    // ✅ THEN SAVE TO CLOUDINARY (for training data)
+    const sessionId = submission.recordings?.sessionId;
+    if (sessionId) {
       const labelData = {
         sessionId,
         userId: user.rollNo,
@@ -81,9 +102,9 @@ const Results = ({ user, submission, onExit }) => {
         notes,
         labeledAt: Date.now(),
         labeledBy: user.name,
-        submissionScore: finalScore,
-        violations: totalViolations,
-        proctorRiskLevel: proctorReport.riskLevel || 'UNKNOWN'
+        submissionScore: submission.score,
+        violations: submission.violations?.length || 0,
+        proctorRiskLevel: submission.proctorReport?.riskLevel || 'UNKNOWN'
       };
 
       const labelBlob = new Blob([JSON.stringify(labelData, null, 2)], {
@@ -99,29 +120,19 @@ const Results = ({ user, submission, onExit }) => {
         'raw'
       );
 
-      await fetch(`${BACKEND_URL}/api/exams/label`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          submissionId: submission._id,
-          label: sessionLabel,
-          cheatingType,
-          notes,
-          labeledBy: user.name
-        })
-      });
-
-      setLabelSaved(true);
-      alert('Label saved successfully! This data will be used to improve the AI model.');
-    } catch (error) {
-      console.error('Error saving label:', error);
-      alert('Failed to save label: ' + error.message);
-    } finally {
-      setIsLabeling(false);
+      console.log('✅ Label saved to Cloudinary');
     }
-  };
+
+    setLabelSaved(true);
+    alert('Label saved successfully! ✅\n\nData saved to:\n- Database (for queries)\n- Cloudinary (for ML training)');
+
+  } catch (error) {
+    console.error('❌ Error saving label:', error);
+    alert('Failed to save label: ' + error.message);
+  } finally {
+    setIsLabeling(false);
+  }
+};
 
   return (
     <div className="results-container">

@@ -449,39 +449,85 @@ function calculateDynamicPenalty(violations, proctorReport) {
   };
 }
 
-// Label submission
-router.post('/label', auth, async (req, res) => {
+router.post('/label', async (req, res) => {
   try {
     const { submissionId, label, cheatingType, notes, labeledBy } = req.body;
 
+    console.log('📝 Labeling submission:', {
+      submissionId,
+      label,
+      cheatingType,
+      labeledBy
+    });
+
+    // ✅ FIX: Validate submission ID
+    if (!submissionId) {
+      return res.status(400).json({ 
+        message: 'Submission ID is required' 
+      });
+    }
+
+    // ✅ FIX: Validate label
+    if (!label || !['genuine', 'cheating', 'unlabeled'].includes(label)) {
+      return res.status(400).json({ 
+        message: 'Invalid label. Must be: genuine, cheating, or unlabeled' 
+      });
+    }
+
+    // ✅ FIX: If cheating, require type
+    if (label === 'cheating' && !cheatingType) {
+      return res.status(400).json({ 
+        message: 'Cheating type is required when label is "cheating"' 
+      });
+    }
+
+    // Find submission
     const submission = await Submission.findById(submissionId);
+    
     if (!submission) {
-      return res.status(404).json({ message: 'Submission not found' });
+      return res.status(404).json({ 
+        message: 'Submission not found' 
+      });
     }
 
-    submission.label = label.toLowerCase();
-    submission.cheatingType = cheatingType;
-    submission.labelNotes = notes;
+    // ✅ NEW: Create label data object
+    const labelData = {
+      label,
+      cheatingType: label === 'cheating' ? cheatingType : null,
+      notes: notes || '',
+      labeledBy,
+      labeledAt: new Date(),
+      // Additional metadata for ML training
+      metadata: {
+        baseScore: submission.baseScore,
+        finalScore: submission.score,
+        percentage: submission.percentage,
+        totalViolations: submission.violations?.length || 0,
+        violationTypes: submission.violations?.map(v => v.type) || [],
+        proctorRiskLevel: submission.proctorReport?.riskLevel || 'UNKNOWN',
+        ghostTypingCount: submission.proctorReport?.violationBreakdown?.ghostTyping || 0,
+        timeTaken: submission.timeTaken
+      }
+    };
+
+    // ✅ UPDATE SUBMISSION with label data
+    submission.labelData = labelData;
+    submission.labeled = true;
     submission.labeledAt = new Date();
-    submission.labeledBy = labeledBy;
-    submission.isLabeled = true;
-
-    if (submission.recordings) {
-      submission.recordings.label = label.toLowerCase();
-      submission.recordings.cheatingType = cheatingType;
-      submission.recordings.notes = notes;
-      submission.recordings.labeledAt = new Date();
-      submission.recordings.labeledBy = labeledBy;
-    }
-
+    
     await submission.save();
 
-    res.json({ 
-      success: true, 
+    console.log('✅ Label saved to submission');
+
+    res.json({
       message: 'Label saved successfully',
-      label: submission.label,
-      isLabeled: submission.isLabeled
+      submission: {
+        _id: submission._id,
+        labeled: submission.labeled,
+        labelData: submission.labelData
+      }
     });
+
   } catch (error) {
     console.error('❌ Error saving label:', error);
     res.status(500).json({ 
@@ -490,6 +536,7 @@ router.post('/label', auth, async (req, res) => {
     });
   }
 });
+
 // Get labeled submissions FOR EVALUATION
 router.get('/evaluation-stats', async (req, res) => {
   try {
@@ -526,78 +573,78 @@ router.get('/evaluation-stats', async (req, res) => {
  */
 router.get('/labeled-submissions', async (req, res) => {
   try {
-    // Fetch all submissions that have been labeled
-    const labeledSubmissions = await Submission.find({ 
-      isLabeled: true,
-      label: { $in: ['genuine', 'cheating'] }
-    })
-    .select({
-      _id: 1,
-      userId: 1,
-      examId: 1,
-      submittedAt: 1,
-      completedAt: 1,
-      score: 1,
-      violations: 1,
-      status: 1,
-      label: 1,
-      isLabeled: 1,
-      cheatingType: 1,
-      labeledBy: 1,
-      labeledAt: 1,
-      labelNotes: 1
-    })
-    .sort({ labeledAt: -1 })
-    .lean();
+    const { label, limit = 100 } = req.query;
 
-    console.log(`✅ Fetched ${labeledSubmissions.length} labeled submissions for evaluation`);
+    const query = { labeled: true };
+    
+    if (label && ['genuine', 'cheating'].includes(label)) {
+      query['labelData.label'] = label;
+    }
 
-    res.json(labeledSubmissions);
+    const submissions = await Submission.find(query)
+      .limit(parseInt(limit))
+      .sort({ labeledAt: -1 })
+      .select('student exam labelData violations proctorReport score percentage')
+      .populate('student', 'name rollNo')
+      .populate('exam', 'title');
+
+    console.log(`📊 Found ${submissions.length} labeled submissions`);
+
+    res.json({
+      count: submissions.length,
+      submissions
+    });
+
   } catch (error) {
     console.error('Error fetching labeled submissions:', error);
     res.status(500).json({ 
-      error: 'Failed to fetch labeled submissions',
-      message: error.message 
+      message: 'Failed to fetch labeled submissions',
+      error: error.message 
     });
   }
 });
 
-// STEP 3: Add this helper endpoint for debugging
-router.get('/label-stats', async (req, res) => {
+
+router.get('/labeling-stats', async (req, res) => {
   try {
-    console.log('📊 Fetching label statistics...');
-    
-    const stats = {
-      total: await Submission.countDocuments({}),
-      labeled: await Submission.countDocuments({ isLabeled: true }),
-      unlabeled: await Submission.countDocuments({ 
-        $or: [
-          { isLabeled: false },
-          { isLabeled: { $exists: false } },
-          { label: 'unlabeled' }
-        ]
-      }),
-      genuine: await Submission.countDocuments({ 
-        isLabeled: true, 
-        label: 'genuine' 
-      }),
-      cheating: await Submission.countDocuments({ 
-        isLabeled: true, 
-        label: 'cheating' 
-      }),
-      // Additional breakdown
-      byLabel: {
-        genuine: await Submission.countDocuments({ label: 'genuine' }),
-        cheating: await Submission.countDocuments({ label: 'cheating' }),
-        unlabeled: await Submission.countDocuments({ label: 'unlabeled' })
+    const totalLabeled = await Submission.countDocuments({ labeled: true });
+    const genuineCount = await Submission.countDocuments({ 
+      'labelData.label': 'genuine' 
+    });
+    const cheatingCount = await Submission.countDocuments({ 
+      'labelData.label': 'cheating' 
+    });
+
+    // Count by cheating type
+    const cheatingTypes = await Submission.aggregate([
+      { $match: { 'labelData.label': 'cheating' } },
+      { $group: {
+          _id: '$labelData.cheatingType',
+          count: { $sum: 1 }
+        }
       }
-    };
-    
-    console.log('Stats:', JSON.stringify(stats, null, 2));
-    res.json(stats);
+    ]);
+
+    res.json({
+      totalLabeled,
+      byLabel: {
+        genuine: genuineCount,
+        cheating: cheatingCount
+      },
+      cheatingTypes,
+      balance: {
+        genuine: genuineCount,
+        cheating: cheatingCount,
+        ratio: genuineCount > 0 ? (cheatingCount / genuineCount).toFixed(2) : 0
+      }
+    });
+
   } catch (error) {
-    console.error('Error getting stats:', error);
-    res.status(500).json({ error: error.message });
+    console.error('Error fetching labeling stats:', error);
+    res.status(500).json({ 
+      message: 'Failed to fetch stats',
+      error: error.message 
+    });
   }
 });
 

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const submissionSchema = new mongoose.Schema({
-  user: {
+  student: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
@@ -10,21 +10,6 @@ const submissionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Exam',
     required: true
-  },
-  startTime: {
-    type: Date,
-    required: true,
-    default: Date.now
-  },
-  endTime: {
-    type: Date
-  },
-  submittedAt: {
-    type: Date
-  },
-  timeTaken: {
-    type: Number,
-    default: 0
   },
   answers: [{
     questionNumber: Number,
@@ -35,96 +20,28 @@ const submissionSchema = new mongoose.Schema({
     pointsPossible: Number
   }],
   violations: [{
-    type: {
-      type: String,
-      enum: [
-        'tab_switch', 
-        'face_not_detected', 
-        'multiple_faces', 
-        'phone_detected', 
-        'screen_stopped', 
-        'suspicious_behavior',
-        'NO_FACE_DETECTED',
-        'MULTIPLE_PERSONS',
-        'GHOST_TYPING_DETECTED',
-        'LOOKING_AWAY',
-        'SUSPICIOUS_HAND_MOVEMENT'
-      ]
-    },
+    type: String,
     timestamp: Date,
     description: String,
-    severity: {
-      type: String,
-      enum: ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']
-    },
-    details: mongoose.Schema.Types.Mixed,
-    confidence: Number
+    severity: String
   }],
-  recordings: {
-    sessionId: String,
-    webcamURL: String,
-    screenURL: String,
-    eventsURL: String,
-    webcamPublicId: String,
-    screenPublicId: String,
-    eventsPublicId: String,
-    duration: Number,
-    label: {
-      type: String,
-      enum: ['clean', 'suspicious', 'cheating', 'genuine', 'unlabeled'],
-      default: 'unlabeled'
-    },
-    cheatingType: String,
-    notes: String,
-    labeledAt: Date,
-    labeledBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    },
-    message: String,
-    keystrokes: [{
-      timestamp: Number,
-      key: String,
-      codeLength: Number,
-      relativeTime: Number
-    }]
+  timeTaken: {
+    type: Number,
+    default: 0
   },
-  
-  // ========================================
-  // PROCTOR REPORT FIELDS
-  // ========================================
-  proctorReport: {
-    studentId: String,
-    examId: String,
-    duration: Number,
-    totalViolations: Number,
-    framesProcessed: Number,
-    screenFramesProcessed: Number,
-    riskLevel: {
-      type: String,
-      enum: ['LOW_RISK', 'MEDIUM_RISK', 'HIGH_RISK']
-    },
-    violationBreakdown: {
-      ghostTyping: { type: Number, default: 0 },
-      noFace: { type: Number, default: 0 },
-      multiplePersons: { type: Number, default: 0 },
-      lookingAway: { type: Number, default: 0 },
-      suspiciousHands: { type: Number, default: 0 }
-    },
-    violations: [{
-      type: String,
-      severity: String,
-      timestamp: Date,
-      details: mongoose.Schema.Types.Mixed,
-      confidence: Number
-    }]
-  },
-  proctorSessionId: String,
-  
-  // ========================================
-  // SCORING FIELDS
-  // ========================================
   baseScore: {
+    type: Number,
+    default: 0
+  },
+  score: {
+    type: Number,
+    default: 0
+  },
+  percentage: {
+    type: Number,
+    default: 0
+  },
+  totalPoints: {
     type: Number,
     default: 0
   },
@@ -138,65 +55,87 @@ const submissionSchema = new mongoose.Schema({
     penalty: Number,
     maxReached: Boolean
   }],
-  score: {
-    type: Number,
-    default: 0
-  },
-  totalPoints: {
-    type: Number,
-    default: 0
-  },
-  percentage: {
-    type: Number,
-    default: 0
-  },
   status: {
     type: String,
-    enum: ['in_progress', 'submitted', 'flagged', 'under_review', 'graded'],
+    enum: ['in_progress', 'submitted', 'flagged', 'reviewed'],
     default: 'in_progress'
   },
+  proctorReport: {
+    studentId: String,
+    examId: String,
+    duration: Number,
+    totalViolations: Number,
+    violationSummary: Object,
+    detailedViolations: Array,
+    riskLevel: {
+      type: String,
+      enum: ['LOW_RISK', 'MEDIUM_RISK', 'HIGH_RISK', 'UNKNOWN'],
+      default: 'UNKNOWN'
+    },
+    framesProcessed: Number,
+    screenFramesProcessed: Number,
+    timestamp: String,
+    violationBreakdown: {
+      ghostTyping: Number,
+      noFace: Number,
+      multiplePersons: Number
+    }
+  },
+  proctorSessionId: String,
+  recordings: {
+    cameraUrl: String,
+    screenUrl: String,
+    eventsUrl: String,
+    sessionId: String
+  },
   
-  // ========================================
-  // LABELING FIELDS FOR AI TRAINING
-  // ========================================
-  label: {
-    type: String,
-    enum: ['unlabeled', 'genuine', 'cheating'],
-    default: 'unlabeled'
-  },
-  cheatingType: {
-    type: String,
-    enum: [
-      null,
-      'ghost_typing',
-      'phone_usage',
-      'copy_paste',
-      'notes_usage',
-      'tab_switching',
-      'multiple_persons',
-      'other'
-    ],
-    default: null
-  },
-  labelNotes: {
-    type: String,
-    default: ''
-  },
-  labeledBy: {
-    type: String,
-    default: null
-  },
-  labeledAt: {
-    type: Date,
-    default: null
-  },
-  isLabeled: {
+  // ✅ NEW: Label data for ML training
+  labeled: {
     type: Boolean,
     default: false
-  }
+  },
+  labeledAt: Date,
+  labelData: {
+    label: {
+      type: String,
+      enum: ['genuine', 'cheating', 'unlabeled'],
+      default: 'unlabeled'
+    },
+    cheatingType: {
+      type: String,
+      enum: [
+        'ghost_typing',
+        'phone_usage',
+        'copy_paste',
+        'notes_usage',
+        'tab_switching',
+        'multiple_persons',
+        'other',
+        null
+      ],
+      default: null
+    },
+    notes: String,
+    labeledBy: String,
+    labeledAt: Date,
+    metadata: {
+      baseScore: Number,
+      finalScore: Number,
+      percentage: Number,
+      totalViolations: Number,
+      violationTypes: [String],
+      proctorRiskLevel: String,
+      ghostTypingCount: Number,
+      timeTaken: Number
+    }
+  },
   
-}, { 
-  timestamps: true 
+  submittedAt: {
+    type: Date,
+    default: Date.now
+  }
+}, {
+  timestamps: true
 });
 
 // ========================================
@@ -227,6 +166,7 @@ submissionSchema.index({ proctorSessionId: 1 });
 submissionSchema.index({ label: 1 });
 submissionSchema.index({ isLabeled: 1 });
 submissionSchema.index({ labeledAt: -1 });
+
 
 // ========================================
 // INSTANCE METHODS
@@ -320,5 +260,7 @@ submissionSchema.statics.getEvaluationMetrics = async function() {
     }
   };
 };
-
+submissionSchema.index({ labeled: 1, 'labelData.label': 1 });
+submissionSchema.index({ 'labelData.labeledAt': -1 });
+submissionSchema.index({ student: 1, submittedAt: -1 });
 module.exports = mongoose.model('Submission', submissionSchema);

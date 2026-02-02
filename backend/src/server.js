@@ -17,12 +17,11 @@ const app = express();
 // ✅ UPDATED CORS Configuration
 const corsOptions = {
   origin: [
-    'https://exam-proctor-app.vercel.app',  // Your production Vercel URL
-    'http://localhost:5173',                 // Vite dev server
-    'http://localhost:3000',                 // Alternative React dev server
-    'http://127.0.0.1:5173',                 // Alternative localhost
-    // Add your actual Vercel URL here when you deploy:
-    // 'https://your-actual-vercel-url.vercel.app'
+     'https://exam-proctor-app.vercel.app',  // ✅ Your actual Vercel URL
+    'https://exam-proctor-app-*.vercel.app', // ✅ Preview deployments
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'http://127.0.0.1:5173'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
