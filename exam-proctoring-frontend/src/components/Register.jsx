@@ -52,9 +52,9 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
     setLoading(true);
 
     try {
-      console.log('📡 Registering at:', `${BACKEND_URL}/api/auth/register`);
+      console.log('📡 Registering at:', `https://exam-proctor-backend-jxrb.onrender.com/api/auth/register`);
       
-      const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
+      const response = await fetch(`https://exam-proctor-backend-jxrb.onrender.com/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

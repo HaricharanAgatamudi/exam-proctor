@@ -35,7 +35,7 @@ except ImportError:
 class GhostTypingEvaluator:
     """Evaluation system for Ghost Typing Detection"""
     
-    def __init__(self, backend_url="http://localhost:5000"):
+    def __init__(self, backend_url="https://exam-proctor-backend-jxrb.onrender.com"):
         self.backend_url = backend_url
         self.sessions = []
         
@@ -651,7 +651,7 @@ def main():
     """Main function"""
     print("🚀 Starting Ghost Typing Evaluation System\n")
     
-    evaluator = GhostTypingEvaluator(backend_url="http://localhost:5000")
+    evaluator = GhostTypingEvaluator(backend_url="https://exam-proctor-backend-jxrb.onrender.com")
     
     print("Attempting to fetch labeled submissions from backend...")
     submissions = evaluator.fetch_labeled_submissions()
@@ -701,7 +701,7 @@ def main():
     print("  3. evaluation_metrics.xlsx - Formatted Excel workbook")
     print("  4. evaluation_report.docx - Word document report")
     print("\n💡 Backend Connection:")
-    print("  - Check if your backend is running on http://localhost:5000")
+    print("  - Check if your backend is running on https://exam-proctor-backend-jxrb.onrender.com")
     print("  - Verify the API endpoint returns labeled submissions")
     print("  - Check MongoDB for sessions with 'label' field set")
     print("\n💡 Next steps:")
